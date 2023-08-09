@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API_CALL</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <center>
+    <table>
+        <thead>
+            <tr>
+                <th>Calling Seva</th>
+            </tr>
+        </thead>
+        <tbody id="Name"></tbody>
+    </table>
+  </center>
+  <div class="overlap">
+    <div class="resigter">
+        <span onclick="closeregister()">&times;</span>
+        <form action="">
+            <div class="n" id="class_username">
+                Ankit
+            </div>
+            <div class="short_n">
+                hari boll
+            </div>
+            <br>
+
+            <div class="u1">
+                <div class="choise"><label for=""><b>interested ?</b></label></div>
+                <div class="choise><input type="radio">YES</div>
+                <div class="choise><input type="radio">NO</div>
+            </div>
+
+            <div class="u1">
+                <label for="">user name</label>
+                <br>
+                <input type="text">
+            </div>
+        </form>
+    </div>
+  </div>
+
+   <script>
+  async  function API(){
+    	
+  let domain = 'https://mighty-spoons-tap.loca.lt'
+	let path = '/calling-data/2';
+	let domain1 = 'http://localhost';
+   let url = domain+path;
+   console.log(url);
+  let result = await fetch(url);
+
+        console.log("Debug1");
+ 		// console.log(result); 
+        result = await result.json();
+        console.warn(result);
+        document.getElementById('Name').innerHTML=result.map((user) =>
+         `<tr>
+            <td>
+                <div class="container">
+
+                    <div class="name1">
+                        <div class="name">${user.calleeName}</div>
+                        <div class="shortname">${user.programAttending}</div>
+                    </div>
+
+                    <div class="phone">
+                        <a href="tel:${user.mobile}"> 
+                            <button  type="button" onclick="change('call2.png','${user.calleeName}')"> 
+                                <img src="call.png" id="${user.calleeName}">
+                            </button>
+                        </a>
+                    </div>
+
+                    <div class="email">
+                         <button type="button" onclick="popup('${user.calleeName}','${user.id}')">
+                            <img src="message.png" id="${user.calleeName}">
+                        </button>
+                    </div>
+
+                </div>
+            </td>
+          </tr>
+         `
+         ).join("")
+
+}
+     API();
+     function change(filename,x){
+        let img = document.getElementById(x);
+        img.setAttribute("src",filename);
+     }
+     function popup(username,id){
+        document.querySelector('.overlap').classList.add('showoverlap');
+        document.querySelector('.resigter').classList.add('showresigter');
+        let x = document.getElementById('class_username');
+        x.innerText=username;
+        let y = document.getElementById('short_n');
+        y.innerText=id;
+        
+     }
+     function closeregister(){
+        document.querySelector('.overlap').classList.remove('showoverlap');
+        document.querySelector('.resigter').classList.remove('showresigter');
+     }
+
+ </script>
+</body>
+</html>
